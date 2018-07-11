@@ -28,13 +28,13 @@ open class Transport(
 		}
 		location.addLocal(velocity.mult((tpf/1000f)))
 	}
-	fun draw(g:Graphics){
+	fun draw(g:Graphics,axis:Vector2f){
 		g.color=color
 		val x=heading.normalize()
 		val y = Vector2f(-x.y, x.x)
-		val p1=x.mult(8f).add(location)
-		val p2 = x.negate().add(y).mult(5f).add(location)
-		val p3 = x.negate().add(y.negate()).mult(5f).add(location)
+		val p1=x.mult(8f).add(location).add(axis)
+		val p2 = x.negate().add(y).mult(5f).add(location).add(axis)
+		val p3 = x.negate().add(y.negate()).mult(5f).add(location).add(axis)
 		fun drawLine(p1:Vector2f,p2:Vector2f,g: Graphics){
 			g.drawLine(p1.x.toInt(),p1.y.toInt(),p2.x.toInt(),p2.y.toInt())
 		}
