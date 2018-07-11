@@ -14,10 +14,10 @@ fun main(args: Array<String>) {
 	val state=ArriveState(transport,Vector2f(100f,150f),SpeedLevel.MIDDLE)
 	transport.states.add(state)
 	panel.transports.add(transport)
-	val killer = Transport(1f, Vector2f(1000f, 500f), maxAcceleration = 150f, maxVelocity = 125f,color = Color.BLUE)
-	val state2 = PursuitState(killer, transport)
-	killer.states.add(state2)
-	panel.transports.add(killer)
+	val evader = Transport(1f, Vector2f(300f, 500f), maxAcceleration = 150f, maxVelocity = 50f,color = Color.BLUE)
+	val state2 = EvadeState(evader, transport)
+	evader.states.add(state2)
+	panel.transports.add(evader)
 	panel.addMouseListener(object:MouseAdapter(){
 		override fun mouseClicked(e: MouseEvent?) {
 			state.target= Vector2f(e!!.x.toFloat(),e.y.toFloat())
@@ -58,7 +58,7 @@ class MyPanel:JPanel(){
 			val v=(transports[0].states[0] as ArriveState).target
 			g.drawOval(v.x.toInt() - 2, v.y.toInt() - 2, 4, 4)
 			g.color= Color.GREEN
-			val v2=(transports[1].states[0] as PursuitState).seekTarget
+			val v2=(transports[1].states[0] as EvadeState).evadeTarget
 			g.drawOval(v2.x.toInt() - 2, v2.y.toInt() - 2, 4, 4)
 		}
 	}

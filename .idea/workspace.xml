@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17b5a138-6535-4040-8569-d97334312865" name="Default" comment="" />
+    <list default="true" id="17b5a138-6535-4040-8569-d97334312865" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/EvadeState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/EvadeState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frame.kt" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,8 +42,8 @@
       <file leaf-file-name="State.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/State.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
+            <state relative-caret-position="88">
+              <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -54,20 +57,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EvadeState.kt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EvadeState.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EvadeState.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="16" selection-start-column="16" selection-end-column="16" />
+            <state relative-caret-position="66">
+              <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Frame.kt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Frame.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Frame.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="13" column="73" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="73" />
+            <state relative-caret-position="1232">
+              <caret line="63" column="5" lean-forward="true" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -101,6 +104,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -110,9 +116,9 @@
         <option value="$PROJECT_DIR$/src/ArriveState.kt" />
         <option value="$PROJECT_DIR$/src/Puisuit.kt" />
         <option value="$PROJECT_DIR$/src/Transport.kt" />
-        <option value="$PROJECT_DIR$/src/Frame.kt" />
         <option value="$PROJECT_DIR$/src/PursuitState.kt" />
         <option value="$PROJECT_DIR$/src/EvadeState.java" />
+        <option value="$PROJECT_DIR$/src/Frame.kt" />
         <option value="$PROJECT_DIR$/src/EvadeState.kt" />
       </list>
     </option>
@@ -233,6 +239,7 @@
       </profile-state>
     </entry>
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -365,7 +372,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32941177" />
       <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" side_tool="true" weight="0.3298611" />
       <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32911393" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info id="Capture Tool" order="2" />
@@ -424,31 +431,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/State.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FleeState.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="111" selection-start-line="7" selection-start-column="111" selection-end-line="7" selection-end-column="111" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PursuitState.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Frame.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="13" column="73" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="73" />
         </state>
       </provider>
     </entry>
@@ -459,6 +445,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/State.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SeekState.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -466,10 +459,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/PursuitState.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/EvadeState.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="16" selection-start-column="16" selection-end-column="16" />
+        <state relative-caret-position="66">
+          <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Frame.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1232">
+          <caret line="63" column="5" lean-forward="true" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
         </state>
       </provider>
     </entry>
