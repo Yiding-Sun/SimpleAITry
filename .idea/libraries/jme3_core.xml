@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jme3-core">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../jME3/lib/jme3-core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
