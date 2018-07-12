@@ -11,11 +11,11 @@ import javax.swing.JPanel
 
 fun main(args: Array<String>) {
 	val frame = JFrame("TRY")
-	val list=makeObstacles()
-	val panel=MyPanel(list)
-	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 150f,maxVelocity = 150f,color = Color.BLACK)
+	val list = makeObstacles()
+	val panel = MyPanel(list)
+	val transport = Transport(1f, Vector2f(200f, 150f), maxAcceleration = 150f, maxVelocity = 150f, color = Color.BLACK)
 	//val wanderer= Transport(1f, Vector2f(300f, 500f), maxAcceleration = 300f, maxVelocity = 200f,color = Color.BLUE)
-	val state = ArriveState(transport, Vector2f(0f,0f),SpeedLevel.MIDDLE)
+	val state = ArriveState(transport, Vector2f(0f, 0f), SpeedLevel.MIDDLE)
 	//val state2 = PursuitState(wanderer,transport)
 	transport.states.add(state)
 	//wanderer.states.add(state2)
@@ -25,45 +25,50 @@ fun main(args: Array<String>) {
 	//panel.transports.add(wanderer)
 	
 	panel.transports.add(transport)
+	val newList=ArrayList<Transport>()
 	repeat(10) {
 		val new = Transport(1f, Vector2f(200f * Math.random().toFloat(), 150f * Math.random().toFloat()), maxAcceleration = 200f, maxVelocity = 150f, color = Color.GREEN)
-		val newState = SeparationState(new,panel.transports)
+		val newState = SeparationState(new,newList)
 		new.states.add(newState)
+		new.states.add(AlignmentState(new, newList))
+		new.states.add(CohesionState(new, newList))
+		new.states.add(EvadeState(new,transport))
 		panel.transports.add(new)
+		newList.add(new)
 	}
 	
-	panel.addMouseListener(object:MouseAdapter(){
+	panel.addMouseListener(object : MouseAdapter() {
 		override fun mouseClicked(e: MouseEvent?) {
-			state.target= Vector2f(e!!.x.toFloat(),e.y.toFloat()).add(panel.axis.negate())
+			state.target = Vector2f(e!!.x.toFloat(), e.y.toFloat()).add(panel.axis.negate())
 		}
 	})
-	frame.addKeyListener(object:KeyAdapter(){
+	frame.addKeyListener(object : KeyAdapter() {
 		override fun keyPressed(e: KeyEvent?) {
-			when(e!!.keyCode){
-				KeyEvent.VK_A -> panel.a=true
-				KeyEvent.VK_D -> panel.d=true
-				KeyEvent.VK_W -> panel.w=true
-				KeyEvent.VK_S -> panel.s=true
+			when (e!!.keyCode) {
+				KeyEvent.VK_A -> panel.a = true
+				KeyEvent.VK_D -> panel.d = true
+				KeyEvent.VK_W -> panel.w = true
+				KeyEvent.VK_S -> panel.s = true
 			}
 		}
 		
 		override fun keyReleased(e: KeyEvent?) {
-			when(e!!.keyCode){
-				KeyEvent.VK_A -> panel.a=false
-				KeyEvent.VK_D -> panel.d=false
-				KeyEvent.VK_W -> panel.w=false
-				KeyEvent.VK_S -> panel.s=false
+			when (e!!.keyCode) {
+				KeyEvent.VK_A -> panel.a = false
+				KeyEvent.VK_D -> panel.d = false
+				KeyEvent.VK_W -> panel.w = false
+				KeyEvent.VK_S -> panel.s = false
 			}
 		}
 	})
-	frame.contentPane.add(panel,BorderLayout.CENTER)
-	frame.isVisible=true
-	frame.defaultCloseOperation=JFrame.EXIT_ON_CLOSE
+	frame.contentPane.add(panel, BorderLayout.CENTER)
+	frame.isVisible = true
+	frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 	frame.setSize(1200, 800)
-	val thread=object :Thread(){
+	val thread = object : Thread() {
 		override fun run() {
 			super.run()
-			while(true) {
+			while (true) {
 				panel.repaint()
 				Thread.sleep(20)
 			}
@@ -71,32 +76,34 @@ fun main(args: Array<String>) {
 	}
 	thread.start()
 }
-fun makeObstacles():ArrayList<Obstacle>{
-	val list=ArrayList<Obstacle>()
-	fun makeObstacle():Obstacle=Obstacle(Vector2f((Math.random()*1200).toFloat(),(Math.random()*800).toFloat()),Math.random().toFloat()*100)
-	repeat(10) {list.add(makeObstacle())}
+
+fun makeObstacles(): ArrayList<Obstacle> {
+	val list = ArrayList<Obstacle>()
+	fun makeObstacle(): Obstacle = Obstacle(Vector2f((Math.random() * 1200).toFloat(), (Math.random() * 800).toFloat()), Math.random().toFloat() * 100)
+	repeat(10) { list.add(makeObstacle()) }
 	return list
 }
-class MyPanel(val list:ArrayList<Obstacle>):JPanel(){
-	val transports=ArrayList<Transport>()
-	var lstUpdate=System.currentTimeMillis()
-	val axis=Vector2f(0f,0f)
-	var a=false
-	var d=false
-	var w=false
-	var s=false
+
+class MyPanel(val list: ArrayList<Obstacle>) : JPanel() {
+	val transports = ArrayList<Transport>()
+	var lstUpdate = System.currentTimeMillis()
+	val axis = Vector2f(0f, 0f)
+	var a = false
+	var d = false
+	var w = false
+	var s = false
 	override fun paintComponent(g: Graphics?) {
-		if(g!=null){
-			val time=System.currentTimeMillis()
-			val tpf=time-lstUpdate
+		if (g != null) {
+			val time = System.currentTimeMillis()
+			val tpf = time - lstUpdate
 			
-			if(a) axis.addLocal(Vector2f(tpf.toFloat(),0f))
-			if(d) axis.addLocal(Vector2f(-tpf.toFloat(), 0f))
-			if(w) axis.addLocal(Vector2f(0f, tpf.toFloat()))
-			if(s) axis.addLocal(Vector2f(0f,-tpf.toFloat()))
+			if (a) axis.addLocal(Vector2f(tpf.toFloat(), 0f))
+			if (d) axis.addLocal(Vector2f(-tpf.toFloat(), 0f))
+			if (w) axis.addLocal(Vector2f(0f, tpf.toFloat()))
+			if (s) axis.addLocal(Vector2f(0f, -tpf.toFloat()))
 			
 			
-			g.color= Color.WHITE
+			g.color = Color.WHITE
 			g.fillRect(0, 0, width, height)
 			/*g.color= Color.GRAY
 			for (i in list) {
@@ -104,14 +111,14 @@ class MyPanel(val list:ArrayList<Obstacle>):JPanel(){
 				g.color=i.color
 				g.fillOval((location.x-i.radius).toInt(),(location.y-i.radius).toInt(),i.radius.toInt()*2,i.radius.toInt()*2)
 			}*/
-			g.color= Color.BLACK
-			lstUpdate=time
+			g.color = Color.BLACK
+			lstUpdate = time
 			for (transport in transports) {
 				transport.update(tpf)
-				transport.draw(g,axis)
+				transport.draw(g, axis)
 			}
-			g.color=Color.RED
-			val v=(transports[0].states[0] as ArriveState).target.add(axis)
+			g.color = Color.RED
+			val v = (transports[0].states[0] as ArriveState).target.add(axis)
 			g.drawOval(v.x.toInt() - 2, v.y.toInt() - 2, 4, 4)
 			/*g.color= Color.GREEN
 			val v2=(transports[1].states[0] as PursuitState).seekTarget.add(axis)
