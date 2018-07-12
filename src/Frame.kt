@@ -13,14 +13,14 @@ import javax.swing.JPanel
 fun main(args: Array<String>) {
 	val frame = JFrame("TRY")
 	val panel=MyPanel()
-	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 150f,maxVelocity = 125f,color = Color.BLACK)
+	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 150f,maxVelocity = 150f,color = Color.BLACK)
 	val state=ArriveState(transport,Vector2f(100f,150f),SpeedLevel.MIDDLE)
 	transport.states.add(state)
 	panel.transports.add(transport)
-	val evader = Transport(1f, Vector2f(300f, 500f), maxAcceleration = 150f, maxVelocity = 50f,color = Color.BLUE)
-	val state2 = EvadeState(evader, transport)
-	evader.states.add(state2)
-	panel.transports.add(evader)
+	val wanderer= Transport(1f, Vector2f(300f, 500f), maxAcceleration = 150f, maxVelocity = 150f,color = Color.BLUE)
+	val state2 = WanderState(wanderer)
+	wanderer.states.add(state2)
+	panel.transports.add(wanderer)
 	panel.addMouseListener(object:MouseAdapter(){
 		override fun mouseClicked(e: MouseEvent?) {
 			state.target= Vector2f(e!!.x.toFloat(),e.y.toFloat()).add(panel.axis.negate())
@@ -92,7 +92,7 @@ class MyPanel:JPanel(){
 			val v=(transports[0].states[0] as ArriveState).target.add(axis)
 			g.drawOval(v.x.toInt() - 2, v.y.toInt() - 2, 4, 4)
 			g.color= Color.GREEN
-			val v2=(transports[1].states[0] as EvadeState).evadeTarget.add(axis)
+			val v2=(transports[1].states[0] as WanderState).targetWorld.add(axis)
 			g.drawOval(v2.x.toInt() - 2, v2.y.toInt() - 2, 4, 4)
 		}
 	}
