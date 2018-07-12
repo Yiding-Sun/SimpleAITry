@@ -1,5 +1,4 @@
 import com.jme3.math.Vector2f
-import javafx.scene.input.KeyCode
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Graphics
@@ -14,16 +13,25 @@ fun main(args: Array<String>) {
 	val frame = JFrame("TRY")
 	val list=makeObstacles()
 	val panel=MyPanel(list)
-	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 300f,maxVelocity = 200f,color = Color.BLACK)
-	val wanderer= Transport(1f, Vector2f(300f, 500f), maxAcceleration = 300f, maxVelocity = 200f,color = Color.BLUE)
-	val state = ArriveState(transport, Vector2f(0f,0f),SpeedLevel.FAST)
-	val state2 = PursuitState(wanderer,transport)
+	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 150f,maxVelocity = 150f,color = Color.BLACK)
+	//val wanderer= Transport(1f, Vector2f(300f, 500f), maxAcceleration = 300f, maxVelocity = 200f,color = Color.BLUE)
+	val state = ArriveState(transport, Vector2f(0f,0f),SpeedLevel.MIDDLE)
+	//val state2 = PursuitState(wanderer,transport)
 	transport.states.add(state)
-	wanderer.states.add(state2)
+	//wanderer.states.add(state2)
 	//transport.states.add(ObstacleAvoidState(transport,list))
-	wanderer.states.add(ObstacleAvoidState(wanderer,list))
+	//wanderer.states.add(ObstacleAvoidState(wanderer,list))
 	panel.transports.add(transport)
-	panel.transports.add(wanderer)
+	//panel.transports.add(wanderer)
+	
+	panel.transports.add(transport)
+	repeat(10) {
+		val new = Transport(1f, Vector2f(200f * Math.random().toFloat(), 150f * Math.random().toFloat()), maxAcceleration = 200f, maxVelocity = 150f, color = Color.GREEN)
+		val newState = SeparationState(new,panel.transports)
+		new.states.add(newState)
+		panel.transports.add(new)
+	}
+	
 	panel.addMouseListener(object:MouseAdapter(){
 		override fun mouseClicked(e: MouseEvent?) {
 			state.target= Vector2f(e!!.x.toFloat(),e.y.toFloat()).add(panel.axis.negate())
@@ -90,12 +98,12 @@ class MyPanel(val list:ArrayList<Obstacle>):JPanel(){
 			
 			g.color= Color.WHITE
 			g.fillRect(0, 0, width, height)
-			g.color= Color.GRAY
+			/*g.color= Color.GRAY
 			for (i in list) {
 				val location=i.location.add(axis)
 				g.color=i.color
 				g.fillOval((location.x-i.radius).toInt(),(location.y-i.radius).toInt(),i.radius.toInt()*2,i.radius.toInt()*2)
-			}
+			}*/
 			g.color= Color.BLACK
 			lstUpdate=time
 			for (transport in transports) {
@@ -105,9 +113,9 @@ class MyPanel(val list:ArrayList<Obstacle>):JPanel(){
 			g.color=Color.RED
 			val v=(transports[0].states[0] as ArriveState).target.add(axis)
 			g.drawOval(v.x.toInt() - 2, v.y.toInt() - 2, 4, 4)
-			g.color= Color.GREEN
+			/*g.color= Color.GREEN
 			val v2=(transports[1].states[0] as PursuitState).seekTarget.add(axis)
-			g.drawOval(v2.x.toInt() - 2, v2.y.toInt() - 2, 4, 4)
+			g.drawOval(v2.x.toInt() - 2, v2.y.toInt() - 2, 4, 4)*/
 		}
 	}
 }
