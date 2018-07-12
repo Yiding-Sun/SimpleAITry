@@ -12,20 +12,23 @@ import javax.swing.JPanel
 
 fun main(args: Array<String>) {
 	val frame = JFrame("TRY")
-	val panel=MyPanel()
-	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 125f,maxVelocity = 150f,color = Color.BLACK)
-	val wanderer= Transport(1f, Vector2f(300f, 500f), maxAcceleration = 150f, maxVelocity = 125f,color = Color.BLUE)
-	val state = PursuitState(transport, wanderer)
-	val state2 = WanderState(wanderer)
+	val list=makeObstacles()
+	val panel=MyPanel(list)
+	val transport=Transport(1f, Vector2f(200f,150f),maxAcceleration = 300f,maxVelocity = 200f,color = Color.BLACK)
+	val wanderer= Transport(1f, Vector2f(300f, 500f), maxAcceleration = 300f, maxVelocity = 200f,color = Color.BLUE)
+	val state = ArriveState(transport, Vector2f(0f,0f),SpeedLevel.FAST)
+	val state2 = PursuitState(wanderer,transport)
 	transport.states.add(state)
 	wanderer.states.add(state2)
+	//transport.states.add(ObstacleAvoidState(transport,list))
+	wanderer.states.add(ObstacleAvoidState(wanderer,list))
 	panel.transports.add(transport)
 	panel.transports.add(wanderer)
-	/*panel.addMouseListener(object:MouseAdapter(){
+	panel.addMouseListener(object:MouseAdapter(){
 		override fun mouseClicked(e: MouseEvent?) {
 			state.target= Vector2f(e!!.x.toFloat(),e.y.toFloat()).add(panel.axis.negate())
 		}
-	})*/
+	})
 	frame.addKeyListener(object:KeyAdapter(){
 		override fun keyPressed(e: KeyEvent?) {
 			when(e!!.keyCode){
@@ -60,7 +63,13 @@ fun main(args: Array<String>) {
 	}
 	thread.start()
 }
-class MyPanel:JPanel(){
+fun makeObstacles():ArrayList<Obstacle>{
+	val list=ArrayList<Obstacle>()
+	fun makeObstacle():Obstacle=Obstacle(Vector2f((Math.random()*1200).toFloat(),(Math.random()*800).toFloat()),Math.random().toFloat()*100)
+	repeat(10) {list.add(makeObstacle())}
+	return list
+}
+class MyPanel(val list:ArrayList<Obstacle>):JPanel(){
 	val transports=ArrayList<Transport>()
 	var lstUpdate=System.currentTimeMillis()
 	val axis=Vector2f(0f,0f)
@@ -69,7 +78,6 @@ class MyPanel:JPanel(){
 	var w=false
 	var s=false
 	override fun paintComponent(g: Graphics?) {
-		super.paintComponent(g)
 		if(g!=null){
 			val time=System.currentTimeMillis()
 			val tpf=time-lstUpdate
@@ -82,6 +90,12 @@ class MyPanel:JPanel(){
 			
 			g.color= Color.WHITE
 			g.fillRect(0, 0, width, height)
+			g.color= Color.GRAY
+			for (i in list) {
+				val location=i.location.add(axis)
+				g.color=i.color
+				g.fillOval((location.x-i.radius).toInt(),(location.y-i.radius).toInt(),i.radius.toInt()*2,i.radius.toInt()*2)
+			}
 			g.color= Color.BLACK
 			lstUpdate=time
 			for (transport in transports) {
@@ -89,10 +103,10 @@ class MyPanel:JPanel(){
 				transport.draw(g,axis)
 			}
 			g.color=Color.RED
-			val v=(transports[0].states[0] as PursuitState).seekTarget.add(axis)
+			val v=(transports[0].states[0] as ArriveState).target.add(axis)
 			g.drawOval(v.x.toInt() - 2, v.y.toInt() - 2, 4, 4)
 			g.color= Color.GREEN
-			val v2=(transports[1].states[0] as WanderState).targetWorld.add(axis)
+			val v2=(transports[1].states[0] as PursuitState).seekTarget.add(axis)
 			g.drawOval(v2.x.toInt() - 2, v2.y.toInt() - 2, 4, 4)
 		}
 	}

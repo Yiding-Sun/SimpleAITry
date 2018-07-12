@@ -7,7 +7,8 @@ open class Transport(
 		val location: Vector2f,
 		val maxVelocity: Float = 50f,
 		val maxAcceleration: Float = 20f,
-		val color: Color=Color.BLACK
+		var color: Color=Color.BLACK,
+		val size:Float=5f
 ) {
 	var velocity = Vector2f(0.00001f, 0f)
 	var acceleration = Vector2f(0f, 0f)
@@ -32,9 +33,9 @@ open class Transport(
 		g.color=color
 		val x=heading.normalize()
 		val y = Vector2f(-x.y, x.x)
-		val p1=x.mult(8f).add(location).add(axis)
-		val p2 = x.negate().add(y).mult(5f).add(location).add(axis)
-		val p3 = x.negate().add(y.negate()).mult(5f).add(location).add(axis)
+		val p1=x.mult(size*1.5f).add(location).add(axis)
+		val p2 = x.negate().add(y).mult(size).add(location).add(axis)
+		val p3 = x.negate().add(y.negate()).mult(size).add(location).add(axis)
 		fun drawLine(p1:Vector2f,p2:Vector2f,g: Graphics){
 			g.drawLine(p1.x.toInt(),p1.y.toInt(),p2.x.toInt(),p2.y.toInt())
 		}
