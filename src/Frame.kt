@@ -26,13 +26,14 @@ fun main(args: Array<String>) {
 	
 	panel.transports.add(transport)
 	val newList=ArrayList<Transport>()
-	repeat(10) {
+	repeat(50) {
 		val new = Transport(1f, Vector2f(200f * Math.random().toFloat(), 150f * Math.random().toFloat()), maxAcceleration = 200f, maxVelocity = 150f, color = Color.GREEN)
 		val newState = SeparationState(new,newList)
 		new.states.add(newState)
 		new.states.add(AlignmentState(new, newList))
 		new.states.add(CohesionState(new, newList))
 		new.states.add(EvadeState(new,transport))
+		new.states.add(ObstacleAvoidState(new,list))
 		panel.transports.add(new)
 		newList.add(new)
 	}
@@ -105,12 +106,12 @@ class MyPanel(val list: ArrayList<Obstacle>) : JPanel() {
 			
 			g.color = Color.WHITE
 			g.fillRect(0, 0, width, height)
-			/*g.color= Color.GRAY
+			g.color= Color.GRAY
 			for (i in list) {
 				val location=i.location.add(axis)
 				g.color=i.color
 				g.fillOval((location.x-i.radius).toInt(),(location.y-i.radius).toInt(),i.radius.toInt()*2,i.radius.toInt()*2)
-			}*/
+			}
 			g.color = Color.BLACK
 			lstUpdate = time
 			for (transport in transports) {
