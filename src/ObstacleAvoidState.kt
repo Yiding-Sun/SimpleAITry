@@ -22,7 +22,7 @@ class ObstacleAvoidState(transport: Transport, val list: ArrayList<Obstacle>) : 
 		val answer = Vector2f(0f, 0f)
 		answer.addLocal(transport.velocity.normalize().mult(force.x))
 		answer.addLocal(Vector2f(transport.velocity.normalize().y, -transport.velocity.normalize().x).mult(force.y))
-		return answer.mult(5f)
+		return answer.mult(1/9.3f)
 	}
 	
 	fun Vector2f.toLocalAxis(): Vector2f {

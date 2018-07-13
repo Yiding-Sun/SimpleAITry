@@ -8,6 +8,6 @@ class SeparationState(transport: Transport, val list: ArrayList<Transport>) : St
 			val toTarget=transport.location.add(it.location.negate())
 			force.addLocal(toTarget.normalize().mult(1/toTarget.length()))
 		}
-		return force.mult(2000f)
+		return force.mult(14f)
 	}
 }

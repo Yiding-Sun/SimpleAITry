@@ -10,9 +10,9 @@ class ArriveState(transport: Transport,var target: Vector2f,val speedLevel: Spee
 			var speed=distant/speedLevel.value
 			speed = min(transport.maxVelocity, speed)
 			val desiredVelocity = toTarget.normalize().mult(speed)
-			desiredVelocity.add(transport.velocity.negate()).normalize().mult(transport.maxAcceleration)
+			desiredVelocity.add(transport.velocity.negate()).normalize()
 		}else{
-			transport.velocity.negate()
+			transport.velocity.negate().mult(0.0005f)
 		}
 	}
 }
