@@ -7,8 +7,8 @@ import kotlin.math.sqrt
 open class Transport(
 		private val mass: Float,
 		val location: Vector2f,
-		val maxVelocity: Float = 50f,
-		val maxAcceleration: Float = 20f,
+		var maxVelocity: Float = 50f,
+		var maxAcceleration: Float = 20f,
 		var color: Color = Color.BLACK,
 		val size: Float = 5f
 ) {
@@ -16,6 +16,7 @@ open class Transport(
 	var acceleration = Vector2f(0f, 0f)
 	var heading = Vector2f(1f, 0f)
 	val states = ArrayList<State>()
+	var dead=false
 	fun update(tpf: Long) {
 		val firstLevelForce = Vector2f(0f, 0f)
 		val secondLevelForce = Vector2f(0f, 0f)
