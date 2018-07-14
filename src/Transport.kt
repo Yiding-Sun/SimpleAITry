@@ -17,6 +17,7 @@ open class Transport(
 	var heading = Vector2f(1f, 0f)
 	val states = ArrayList<State>()
 	var dead=false
+	var touchable=false
 	fun update(tpf: Long) {
 		val firstLevelForce = Vector2f(0f, 0f)
 		val secondLevelForce = Vector2f(0f, 0f)
