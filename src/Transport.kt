@@ -10,7 +10,8 @@ open class Transport(
 		var maxVelocity: Float = 50f,
 		var maxAcceleration: Float = 20f,
 		var color: Color = Color.BLACK,
-		val size: Float = 5f
+		val size: Float = 5f,
+		var explode:Boolean=true
 ) {
 	var velocity = Vector2f(0.00001f, 0f)
 	var acceleration = Vector2f(0f, 0f)
@@ -21,7 +22,7 @@ open class Transport(
 	fun update(tpf: Long) {
 		val firstLevelForce = Vector2f(0f, 0f)
 		val secondLevelForce = Vector2f(0f, 0f)
-		var force = Vector2f(0f, 0f)
+		var force: Vector2f
 		for (state in states) {
 			val simpleForce = state.update()
 			when (state) {
@@ -37,14 +38,14 @@ open class Transport(
 				is WanderState -> secondLevelForce.addLocal(simpleForce.mult(150f))
 			}
 		}
-		if (firstLevelForce.length() > maxAcceleration) {
-			force = firstLevelForce.normalize().mult(maxAcceleration)
+		force = if (firstLevelForce.length() > maxAcceleration) {
+			firstLevelForce.normalize().mult(maxAcceleration)
 		} else {
 			val l = firstLevelForce.length()
 			val a = maxAcceleration
 			val cos = cos(firstLevelForce.angleBetween(secondLevelForce))
 			val x = (2 * l * cos + sqrt(4 * l * l * cos * cos - 4 * l * l + 4 * a * a)) / 2
-			force = firstLevelForce.add(secondLevelForce.normalize().mult(x))
+			firstLevelForce.add(secondLevelForce.normalize().mult(x))
 		}
 		acceleration.addLocal(force.mult(1 / mass))
 		acceleration.toMaxLocal(maxAcceleration)
@@ -57,19 +58,19 @@ open class Transport(
 		location.addLocal(velocity.mult((tpf / 1000f)))
 	}
 	
-	fun draw(g: Graphics, axis: Vector2f) {
+	open fun draw(g: Graphics, axis: Vector2f) {
 		g.color = color
 		val x = heading.normalize()
 		val y = Vector2f(-x.y, x.x)
 		val p1 = x.mult(size * 1.5f).add(location).add(axis)
 		val p2 = x.negate().add(y).mult(size).add(location).add(axis)
 		val p3 = x.negate().add(y.negate()).mult(size).add(location).add(axis)
-		fun drawLine(p1: Vector2f, p2: Vector2f, g: Graphics) {
-			g.drawLine(p1.x.toInt(), p1.y.toInt(), p2.x.toInt(), p2.y.toInt())
-		}
 		drawLine(p1, p2, g)
 		drawLine(p1, p3, g)
 		drawLine(p2, p3, g)
+	}
+	fun drawLine(p1: Vector2f, p2: Vector2f, g: Graphics) {
+		g.drawLine(p1.x.toInt(), p1.y.toInt(), p2.x.toInt(), p2.y.toInt())
 	}
 }
 
