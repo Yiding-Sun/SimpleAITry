@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17b5a138-6535-4040-8569-d97334312865" name="Default" comment="" />
+    <list default="true" id="17b5a138-6535-4040-8569-d97334312865" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$explosion$explosionThread$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$explosion$explosionThread$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$4$keyPressed$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$4$keyPressed$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$4$keyPressed$thread$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$4$keyPressed$thread$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$battleStart$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$battleStart$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$thread$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$main$thread$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt$makeObstacles$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt$makeObstacles$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/FrameKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/FrameKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AITry/MyPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AITry/MyPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frame.kt" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,8 +68,8 @@
       <file leaf-file-name="Frame.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Frame.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+            <state relative-caret-position="-2354">
+              <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
               <folding>
                 <element signature="e#0#204#0" expanded="true" />
               </folding>
@@ -805,8 +819,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Frame.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+        <state relative-caret-position="-2354">
+          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
           <folding>
             <element signature="e#0#204#0" expanded="true" />
           </folding>

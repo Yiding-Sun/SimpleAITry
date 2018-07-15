@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 	transport.states.add(ObstacleAvoidState(transport, list))
 	panel.transports.add(transport)
 	
-	val newList = ArrayList<Transport>()
+	var newList = ArrayList<Transport>()
 	repeat(50) {
 		val new = Transport(1f, Vector2f(1200f * Math.random().toFloat(), 800f * Math.random().toFloat()), maxAcceleration = 200f, maxVelocity = 150f, color = Color.GREEN)
 		val newState = SeparationState(new, newList)
@@ -29,7 +29,8 @@ fun main(args: Array<String>) {
 		panel.transports.add(new)
 		newList.add(new)
 	}
-	var selected = newList[0]
+	var mouseLocation=Vector2f(0f,0f)
+	var selected=newList[0]
 	var lstColor = selected.color
 	panel.addMouseListener(object : MouseAdapter() {
 		override fun mouseClicked(e: MouseEvent?) {
@@ -39,10 +40,7 @@ fun main(args: Array<String>) {
 	})
 	panel.addMouseMotionListener(object : MouseMotionAdapter() {
 		override fun mouseMoved(e: MouseEvent?) {
-			selected.color = lstColor
-			selected = newList.minBy { it.location.distanceSquared(Vector2f(e!!.x.toFloat(), e.y.toFloat()).add(panel.axis.negate())) }!!
-			lstColor = selected.color
-			selected.color = Color.RED
+			mouseLocation= Vector2f(e!!.x.toFloat(),e.y.toFloat())
 		}
 	})
 	frame.addKeyListener(object : KeyAdapter() {
@@ -62,7 +60,7 @@ fun main(args: Array<String>) {
 						bullet.states.add(PursuitState(bullet, selected))
 						bullet.states.add(object : State(bullet) {
 							override fun update(): Vector2f {
-								bullet.maxAcceleration = max(bullet.maxAcceleration - 2f, 50f)
+								bullet.maxAcceleration = max(bullet.maxAcceleration - 2f, 20f)
 								return Vector2f(0f, 0f)
 							}
 						})
@@ -72,7 +70,7 @@ fun main(args: Array<String>) {
 							override fun run() {
 								cd = true
 								Thread.sleep(300)
-								bullet.touchable=true
+								bullet.touchable = true
 								Thread.sleep(700)
 								cd = false
 								Thread.sleep(9000)
@@ -102,17 +100,22 @@ fun main(args: Array<String>) {
 		override fun run() {
 			super.run()
 			while (true) {
+				selected.color = lstColor
+				newList= ArrayList(panel.transports.filter { it.color== Color.GREEN })
+				selected = newList.minBy { it.location.distanceSquared(mouseLocation.add(panel.axis.negate())) }!!
+				lstColor = selected.color
+				selected.color = Color.RED
 				panel.repaint()
 				Thread.sleep(20)
 			}
 		}
 	}
 	thread.start()
-	val battleStart=object :Thread(){
+	val battleStart = object : Thread() {
 		override fun run() {
 			Thread.sleep(2000)
-			for(i in panel.transports){
-				i.touchable=true
+			for (i in panel.transports) {
+				i.touchable = true
 			}
 		}
 	}
@@ -121,8 +124,8 @@ fun main(args: Array<String>) {
 
 fun makeObstacles(): ArrayList<Obstacle> {
 	val list = ArrayList<Obstacle>()
-	fun makeObstacle(): Obstacle = Obstacle(Vector2f((Math.random() * 1200).toFloat(), (Math.random() * 800).toFloat()), Math.random().toFloat() * 100)
-	repeat(10) { list.add(makeObstacle()) }
+	fun makeObstacle(): Obstacle = Obstacle(Vector2f((Math.random() * 3600).toFloat() - 1200f, (Math.random() * 2400).toFloat() - 800f), Math.random().toFloat() * 100)
+	repeat(90) { list.add(makeObstacle()) }
 	return list
 }
 
@@ -163,6 +166,7 @@ class MyPanel(val list: ArrayList<Obstacle>) : JPanel() {
 	var d = false
 	var w = false
 	var s = false
+	var start = true
 	override fun paintComponent(g: Graphics?) {
 		if (g != null) {
 			val time = System.currentTimeMillis()
@@ -182,11 +186,20 @@ class MyPanel(val list: ArrayList<Obstacle>) : JPanel() {
 				g.color = i.color
 				g.fillOval((location.x - i.radius).toInt(), (location.y - i.radius).toInt(), i.radius.toInt() * 2, i.radius.toInt() * 2)
 			}
+			g.fillRect(-1200 + axis.x.toInt() - 50, -800 + axis.y.toInt() - 50, 3700, 50)
+			g.fillRect(-1200 + axis.x.toInt() - 50, 1600 + axis.y.toInt(), 3700, 50)
+			g.fillRect(-1200 + axis.x.toInt() - 50, -800 + axis.y.toInt() - 50, 50, 2500)
+			g.fillRect(2400 + axis.x.toInt(), -800 + axis.y.toInt() - 50, 50, 2500)
 			g.color = Color.BLACK
 			lstUpdate = time
 			for (transport in transports) {
-				transport.update(tpf)
+				if (start)
+					transport.update(tpf)
 				transport.draw(g, axis)
+				if (transport.location.x < -1200 || transport.location.x > 2400 || transport.location.y < -800 || transport.location.y > 1600) {
+					transport.dead = true
+					explosion(this)
+				}
 				for (obstacle in list) {
 					if (transport.location.distance(obstacle.location) < 2f + obstacle.radius) {
 						transport.dead = true
@@ -198,7 +211,7 @@ class MyPanel(val list: ArrayList<Obstacle>) : JPanel() {
 				if (transports[i].touchable)
 					for (j in i + 1 until transports.size) {
 						if (transports[j].touchable)
-							if (transports[i].location.distanceSquared(transports[j].location) < 25f) {
+							if (transports[i].location.distanceSquared(transports[j].location) < 50f) {
 								transports[i].dead = true
 								transports[j].dead = true
 								explosion(this)
@@ -217,7 +230,10 @@ class MyPanel(val list: ArrayList<Obstacle>) : JPanel() {
 				val v = (transports[0].states[0] as ArriveState).target.add(axis)
 				g.drawOval(v.x.toInt() - 2, v.y.toInt() - 2, 4, 4)
 			} else {
-				System.exit(0)
+				if(start) {
+					start = false
+					repeat(5){explosion(this)}
+				}
 			}
 			/*g.color= Color.GREEN
 			val v2=(transports[1].states[0] as PursuitState).seekTarget.add(axis)
